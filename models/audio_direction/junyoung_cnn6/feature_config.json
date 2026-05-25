@@ -1,0 +1,29 @@
+{
+  "sample_rate": 16000,
+  "window_sec": 1.0,
+  "stride_sec": 0.5,
+  "n_mels": 64,
+  "n_fft": 1024,
+  "hop_length": 256,
+  "fmin": 50,
+  "fmax": 8000,
+  "input_shape": [
+    64,
+    63,
+    4
+  ],
+  "normalization": {
+    "type": "train_dataset_mean_std",
+    "mean": -22.967098236083984,
+    "std": 7.972318649291992
+  },
+  "channels": 4,
+  "class_to_deg": {
+    "0": 0,
+    "1": 60,
+    "2": 120,
+    "3": 180,
+    "4": 240,
+    "5": 300
+  }
+}

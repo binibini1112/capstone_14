@@ -1,0 +1,47 @@
+{
+  "name": "3_demo_rectangle_center_return",
+  "description": "Scenario 3: demo path at manually set 80-100cm altitude. right 50, forward 50, left 100, back 50, right 50 center return with pauses.",
+  "loops": 1,
+  "steps": [
+    {
+      "command": "right",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    },
+    {
+      "command": "forward",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    },
+    {
+      "command": "left",
+      "cm": 100
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    },
+    {
+      "command": "back",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    },
+    {
+      "command": "right",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 3.0
+    }
+  ]
+}

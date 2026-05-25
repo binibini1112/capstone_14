@@ -1,0 +1,3 @@
+from .ultra_yubin_motor import MotorController, UltraYubinMotorController
+
+UltraChanMotorController = UltraYubinMotorController

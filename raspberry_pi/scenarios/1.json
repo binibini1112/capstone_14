@@ -1,0 +1,75 @@
+{
+  "name": "1_rc_front_view_infinity",
+  "description": "Scenario 1: RC-based front-view infinity. forward_back is always 0; only left_right and up_down move.",
+  "loops": 1,
+  "steps": [
+    {
+      "command": "rc",
+      "left_right": 22,
+      "forward_back": 0,
+      "up_down": 18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "rc",
+      "left_right": 22,
+      "forward_back": 0,
+      "up_down": -18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "rc",
+      "left_right": -22,
+      "forward_back": 0,
+      "up_down": -18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "rc",
+      "left_right": -22,
+      "forward_back": 0,
+      "up_down": 18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "rc",
+      "left_right": -22,
+      "forward_back": 0,
+      "up_down": 18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "rc",
+      "left_right": -22,
+      "forward_back": 0,
+      "up_down": -18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "rc",
+      "left_right": 22,
+      "forward_back": 0,
+      "up_down": -18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "rc",
+      "left_right": 22,
+      "forward_back": 0,
+      "up_down": 18,
+      "yaw": 0,
+      "seconds": 0.7
+    },
+    {
+      "command": "wait",
+      "seconds": 0.2
+    }
+  ]
+}

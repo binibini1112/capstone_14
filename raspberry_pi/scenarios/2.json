@@ -1,0 +1,39 @@
+{
+  "name": "2_front_view_corner_pause",
+  "description": "Scenario 2: start -> up 50cm -> right 50cm -> down 50cm -> left 50cm back to start. Every vertex waits 1 second.",
+  "loops": 1,
+  "steps": [
+    {
+      "command": "up",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    },
+    {
+      "command": "right",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    },
+    {
+      "command": "down",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    },
+    {
+      "command": "left",
+      "cm": 50
+    },
+    {
+      "command": "wait",
+      "seconds": 1.0
+    }
+  ]
+}

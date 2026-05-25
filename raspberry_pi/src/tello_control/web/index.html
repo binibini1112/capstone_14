@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tello Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css?v=26" />
+  </head>
+  <body>
+    <div id="hitOverlay" class="hit-overlay" aria-live="polite">
+      <div>
+        <strong>HIT CONFIRMED</strong>
+        <span id="hitOverlayDetail">Awaiting telemetry</span>
+      </div>
+    </div>
+    <main class="layout">
+      <section class="topbar">
+        <div>
+          <h1>Tello Dashboard</h1>
+          <p id="connection">WebSocket: connecting</p>
+        </div>
+        <div class="topbar-right">
+          <div id="nodeStatus" class="node-status"></div>
+          <div id="liveClock" class="live-clock">LIVE --:--:--</div>
+          <div id="telloBadge" class="badge tello disconnected">TELLO OFF</div>
+          <div id="jetsonBadge" class="badge">DISCONNECTED</div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel status-panel">
+          <h2>Status</h2>
+          <div id="keyStats" class="key-stats"></div>
+          <div id="stateStrip" class="state-strip"></div>
+          <div id="statusMeters" class="status-meters"></div>
+          <dl id="statusGrid"></dl>
+        </article>
+
+        <article class="panel radar-panel">
+          <div class="panel-header">
+            <h2>Motor-Centered Radar</h2>
+            <span id="radarReadout" class="radar-readout">Motor - | Audio -</span>
+          </div>
+          <canvas id="radar" width="420" height="420"></canvas>
+        </article>
+
+        <article class="panel graph-panel">
+          <div class="panel-header">
+            <h2>Live Graphs</h2>
+            <div id="graphLegend" class="legend"></div>
+          </div>
+          <canvas id="graphs" width="900" height="360"></canvas>
+        </article>
+
+        <article class="panel logs-panel">
+          <h2>Events</h2>
+          <div id="events"></div>
+        </article>
+      </section>
+    </main>
+    <script src="/static/app.js?v=26"></script>
+  </body>
+</html>

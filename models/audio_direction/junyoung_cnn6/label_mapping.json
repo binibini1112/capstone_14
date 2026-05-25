@@ -1,0 +1,26 @@
+{
+  "0": {
+    "angle_class": 0,
+    "angle_deg": 0
+  },
+  "1": {
+    "angle_class": 1,
+    "angle_deg": 60
+  },
+  "2": {
+    "angle_class": 2,
+    "angle_deg": 120
+  },
+  "3": {
+    "angle_class": 3,
+    "angle_deg": 180
+  },
+  "4": {
+    "angle_class": 4,
+    "angle_deg": 240
+  },
+  "5": {
+    "angle_class": 5,
+    "angle_deg": 300
+  }
+}

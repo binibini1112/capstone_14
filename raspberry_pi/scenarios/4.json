@@ -1,0 +1,31 @@
+{
+  "name": "4_stage_demo_forward_side_climb",
+  "description": "Scenario 4: stage demo path. start -> up 50cm -> forward 200cm -> left 200cm -> right 200cm -> up 100cm -> hover until hit, then auto land.",
+  "loops": 1,
+  "steps": [
+    {
+      "command": "up",
+      "cm": 50
+    },
+    {
+      "command": "forward",
+      "cm": 200
+    },
+    {
+      "command": "left",
+      "cm": 200
+    },
+    {
+      "command": "right",
+      "cm": 200
+    },
+    {
+      "command": "up",
+      "cm": 100
+    },
+    {
+      "command": "wait_until_stop",
+      "reason": "hit_detected"
+    }
+  ]
+}

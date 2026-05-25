@@ -1,0 +1,31 @@
+{
+  "sr": 16000,
+  "clip_sec": 1.0,
+  "clip_len": 16000,
+  "n_mels": 64,
+  "n_fft": 1024,
+  "hop_length": 256,
+  "fmin": 50,
+  "fmax": 8000,
+  "classes": [
+    "noise",
+    "tello"
+  ],
+  "input_shape": [
+    1,
+    64,
+    63,
+    1
+  ],
+  "output_order": [
+    "noise",
+    "tello"
+  ],
+  "recommended_threshold": 0.5,
+  "smoothing": {
+    "window_size": 5,
+    "required_tello_count": 3,
+    "avg_threshold": 0.55
+  },
+  "note": "Input must be 1 sec 16kHz mono audio converted to 64x63 log-mel spectrogram."
+}
