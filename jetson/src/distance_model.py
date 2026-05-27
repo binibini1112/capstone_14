@@ -75,7 +75,7 @@ class DistanceEstimator:
 
 
 class LaserTickEstimator:
-    """Interpolate laser C-motor base tick directly from detected bbox height."""
+    """Interpolate laser motor base tick directly from detected bbox height."""
 
     def __init__(self, path=None, min_tick=0, max_tick=4095):
         self.path = path

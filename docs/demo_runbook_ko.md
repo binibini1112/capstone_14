@@ -14,7 +14,7 @@ cd /home/jetson/ultra_yubin_v1
 - Ultra96-V2 PS/PL 기반 팬틸트 제어
 - ReSpeaker 오디오 fallback
 - CNN6 방향 모델 기반 소리 방향 회전
-- C모터 레이저 tick 보정
+- 레이저 모터 tick 보정
 - Raspberry Pi dashboard telemetry 송신
 
 ## 오디오 fallback 상태
@@ -35,7 +35,7 @@ TELLO_AUDIO_STABLE_RESET_GAP_SEC=3.0
 
 오디오 fallback은 3개 판단 창에서 2표 이상 같은 방향이면 팬을 돌립니다. 팬 회전 명령이 실제로 나간 직후에는 오디오 방향 투표 버퍼를 초기화하며, 감지 사이 공백이 3초를 넘으면 남아 있던 단독 표를 버리고 새 판단으로 시작합니다.
 
-## C모터 레이저 상태
+## 레이저 모터 상태
 
 현재 데모 기본값은 closed-loop 보정을 끈 안정형입니다.
 

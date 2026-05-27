@@ -291,17 +291,17 @@ Jetson audio model
 
 ```text
 LASER_CAMERA_CENTER_LOCK=1
-LASER_CAMERA_CENTER_TICK=1965
+LASER_CAMERA_CENTER_TICK=1945
 LASER_CAMERA_CENTER_RANGE_COMP=1
-LASER_CAMERA_CENTER_NEAR_BBOX_H=64
-LASER_CAMERA_CENTER_FAR_BBOX_H=19
+LASER_CAMERA_CENTER_NEAR_BBOX_H=42
+LASER_CAMERA_CENTER_FAR_BBOX_H=16
 LASER_CAMERA_CENTER_FAR_OFFSET_TICK=36
 ```
 
 현재 의도:
 
-- 1m 기준으로 레이저가 카메라 중앙에 오도록 `1965` tick 사용
-- bbox 높이가 작아질수록 먼 거리로 보고 C모터 tick을 보정
+- 1m 기준으로 레이저가 카메라 중앙에 오도록 `1945` tick 사용
+- bbox 높이가 작아질수록 먼 거리로 보고 레이저 모터 tick을 보정
 - 다만 실제 레이저 명중 보정은 아직 실험/튜닝 단계
 
 발표에서는 레이저는 "추적된 목표 지점을 향하도록 보정 가능한 구조" 정도로 설명하는 것이 안전하다. pan/tilt 추적 성능이 현재 핵심이다.

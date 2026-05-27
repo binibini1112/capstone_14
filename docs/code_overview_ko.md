@@ -12,7 +12,7 @@
 
 ## Ultra96-V2 PS/PL 제어
 
-`ultra96/pl_goal_compute/ps_app/pl_udp_usb_dxl_bridge.c`는 Ultra96 PS에서 동작하는 C bridge입니다. Jetson UDP 명령을 수신하고 PL AXI-Lite 레지스터 또는 PS fallback 계산 결과를 통해 pan/tilt 목표값을 생성합니다. 이후 U2D2를 통해 Dynamixel pan/tilt/C모터로 goal position을 송신합니다.
+`ultra96/pl_goal_compute/ps_app/pl_udp_usb_dxl_bridge.c`는 Ultra96 PS에서 동작하는 임베디드 C 기반 bridge입니다. Jetson UDP 명령을 수신하고 PL AXI-Lite 레지스터 또는 PS fallback 계산 결과를 통해 pan/tilt 목표값을 생성합니다. 이후 U2D2를 통해 Dynamixel pan/tilt/레이저 모터로 goal position을 송신합니다.
 
 `ultra96/pl_goal_compute/rtl/pl_goal_compute_axi.v`는 PL 영역의 AXI-Lite goal compute RTL입니다. bbox 중심과 frame 중심의 오차를 기반으로 deadband, step clamp, 비례 보정, 최종 goal clamp를 수행합니다.
 

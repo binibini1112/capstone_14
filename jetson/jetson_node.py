@@ -146,7 +146,7 @@ def parse_args():
     parser.add_argument("--no-pipeline-log", action="store_true")
     parser.add_argument("--pipeline-echo", action="store_true")
     parser.add_argument("--pipeline-echo-every", type=int, default=30)
-    parser.add_argument("--async-motor", action="store_true", default=config.ULTRA_CHAN_ASYNC_SEND,
+    parser.add_argument("--asynlaser motor", action="store_true", default=config.ULTRA_CHAN_ASYNC_SEND,
                         help="Send target commands without waiting for Ultra96 USB ACK")
     parser.add_argument("--no-center-on-start", action="store_true",
                         default=not config.ULTRA_CHAN_CENTER_ON_START,
@@ -807,12 +807,12 @@ def main():
         if laser_center_lock_enabled:
             print(
                 "[LASER-CAL] camera-center laser lock: "
-                "j/k C center adjust | J/K big | [/] step | SPACE laser pattern"
+                "j/k laser adjust | J/K big | [/] step | SPACE laser pattern"
             )
         else:
             print(
                 "[LASER-CAL] final-run calibration enabled: "
-                "j/k C | J/K big | [/] step | s save bbox-center hit | SPACE laser pattern"
+                "j/k laser | J/K big | [/] step | s save bbox-center hit | SPACE laser pattern"
             )
     audio_stabilizer = AudioDirectionStabilizer(
         window=config.TELLO_AUDIO_STABLE_WINDOW,
@@ -1835,7 +1835,7 @@ def main():
                         ok, goal, reply = motor.set_laser_tick(int(current_tick) + int(delta))
                         laser_manual_tick = goal
                         last_telemetry = motor.last_telemetry
-                        print(f"[LASER-CAL] C {delta:+d} => tick={goal} ok={int(ok)} reply={reply}")
+                        print(f"[LASER-CAL] laser {delta:+d} => tick={goal} ok={int(ok)} reply={reply}")
                     elif key in (ord("s"), ord("S")):
                         if laser_center_lock_enabled:
                             print("[LASER-CAL] center-lock mode: s save skipped; use j/k and LASER_CAMERA_CENTER_TICK")
