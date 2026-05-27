@@ -2,7 +2,7 @@
 
 ## 1. 주제
 
-드론 기반 객체 추적 시스템에서 Jetson Nano의 영상/음성 인식 결과를 Ultra96 FPGA 보드로 넘기고, Ultra96의 PL/PS를 이용해 팬틸트 Dynamixel 모터를 제어하는 구조를 구현한다.
+드론 기반 객체 추적 시스템에서 Jetson Orin Nano의 영상/음성 인식 결과를 Ultra96 FPGA 보드로 넘기고, Ultra96의 PL/PS를 이용해 팬틸트 Dynamixel 모터를 제어하는 구조를 구현한다.
 
 기존 Jetson 단독 제어 방식은 YOLO 실행 중 모터 명령 지연과 누락이 생길 수 있고, PL이 Dynamixel UART까지 직접 처리하는 방식은 추가 회로와 전기적 위험이 크다. 본 프로젝트는 두 방식의 단점을 줄이기 위해 PL은 추적 연산만 담당하고, 실제 모터 통신은 Ultra96 PS의 USB/U2D2가 담당하는 구조를 사용한다.
 
