@@ -10,6 +10,7 @@ cd /home/jetson/ultra_yubin_v1
 기본 실행은 다음 기능을 포함합니다.
 
 - YOLO11n TensorRT 기반 드론 검출
+- 현재 기본 비전 엔진: `drone0525jh.engine`
 - Ultra96-V2 PS/PL 기반 팬틸트 제어
 - ReSpeaker 오디오 fallback
 - CNN6 방향 모델 기반 소리 방향 회전
@@ -27,9 +28,12 @@ TELLO_AUDIO_MIN_RMS=0.0020
 TELLO_AUDIO_DIRECTION_MODE=cnn6
 TELLO_AUDIO_SKIP_GCC_WITH_CNN6=1
 TELLO_AUDIO_ALSA_DEVICE=auto
+TELLO_AUDIO_STABLE_RESET_GAP_SEC=3.0
 ```
 
 `TELLO_AUDIO_ALSA_DEVICE=auto`는 USB 카드 번호가 바뀌어도 ReSpeaker를 자동으로 찾기 위한 설정입니다.
+
+오디오 fallback은 3개 판단 창에서 2표 이상 같은 방향이면 팬을 돌립니다. 팬 회전 명령이 실제로 나간 직후에는 오디오 방향 투표 버퍼를 초기화하며, 감지 사이 공백이 3초를 넘으면 남아 있던 단독 표를 버리고 새 판단으로 시작합니다.
 
 ## C모터 레이저 상태
 
@@ -50,15 +54,17 @@ Ultra96 PS bridge의 정면 기준은 `/home/xilinx/ultra_yubin_v1/front_center.
 예:
 
 ```text
-PAN=2389
-TILT=2800
+PAN=2048
+TILT=2772
 ```
 
 현장 조정은 다음 스크립트로 수행할 수 있습니다.
 
 ```bash
-python3 scripts/ultra_yubin_calibrate_front.py --set 2389 2800 --center
+python3 scripts/ultra_yubin_calibrate_front.py --set 2048 2772 --center
 ```
+
+레이저 HIT 판정이 발생하면 데모 연출을 위해 약 1초간 현재 방향을 유지한 뒤 `CENTER` 명령으로 정면 기준으로 복귀합니다.
 
 ## Raspberry Pi Dashboard
 
@@ -75,4 +81,3 @@ cd ~/jh
 ```
 
 프로그램에서 `ARM`을 입력한 뒤 시나리오 키를 선택합니다.
-

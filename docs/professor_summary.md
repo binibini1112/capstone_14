@@ -39,8 +39,8 @@ YOLO bbox가 검출되면 항상 YOLO 경로가 1순위이고, YOLO가 미검출
 - Jetson YOLO 송신 노드 구현
 - ReSpeaker/Tello audio fallback 코드 포함
 - Junmo/Junyoung Tello detector 모델 포함
-  - `models/drone_best_final_0520.pt`
-  - `models/drone_best_final_0520.engine`
+  - `models/vision/drone0525jh.engine` 현재 최종 데모 기본 YOLO11n TensorRT 엔진
+  - `models/vision/drone_best_final_0520.engine` 이전 안정형 백업 엔진
 - Tello audio 모델 포함
   - `models/tello_detector.tflite`
   - `models/tello_detector.keras`

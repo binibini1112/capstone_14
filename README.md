@@ -9,6 +9,7 @@ Jetson Orin Nano, Ultra96-V2 FPGA, ReSpeaker 4 Mic Array, Raspberry Pi dashboard
 3. 카메라에 드론이 잡히면 YOLO11n TensorRT 추론 결과를 기준으로 팬틸트가 드론을 화면 중앙에 추적합니다.
 4. Ultra96-V2 PS/PL 브리지는 UDP 명령을 수신하고, PL goal compute 및 U2D2 Dynamixel 제어 경로로 pan/tilt/laser 목표값을 전달합니다.
 5. Raspberry Pi dashboard는 Jetson/Ultra96/Audio/Motor/Laser 상태를 관람자에게 표시합니다.
+6. 레이저 HIT 판정 후에는 약 1초간 현재 방향을 유지한 뒤 팬틸트를 정면 기준으로 복귀시킵니다.
 
 ## 저장소 구성
 
@@ -29,6 +30,8 @@ Jetson에서:
 cd /home/jetson/ultra_yubin_v1
 ./run_demo_pl_drive.sh
 ```
+
+현재 기본 비전 엔진은 데모장 배경을 반영한 `drone0525jh.engine`이며, 이전 안정형 `drone_best_final_0520.engine`도 백업 모델로 함께 보존했습니다.
 
 Raspberry Pi dashboard:
 
@@ -62,4 +65,3 @@ cd ~/jh
 - `docs/architecture.md`
 - `docs/pl_vs_ps_tracking_latency_analysis_ko.md`
 - `raspberry_pi/docs/dashboard_reference.md`
-

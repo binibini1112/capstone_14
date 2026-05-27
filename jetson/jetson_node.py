@@ -472,13 +472,18 @@ def audio_detection_to_motor_angle(audio_detection):
 
 
 class AudioDirectionStabilizer:
-    def __init__(self, window=7, min_votes=3, max_spread_deg=35.0, reject_rear=True):
+    def __init__(self, window=7, min_votes=3, max_spread_deg=35.0, reject_rear=True, reset_gap_sec=3.0):
         self.window = max(1, int(window))
         self.min_votes = max(1, int(min_votes))
         self.max_spread_deg = float(max_spread_deg)
         self.reject_rear = bool(reject_rear)
+        self.reset_gap_sec = max(0.0, float(reset_gap_sec))
         self.samples = []
         self.last_reason = "empty"
+
+    def reset(self):
+        self.samples.clear()
+        self.last_reason = "reset"
 
     def _bin(self, angle):
         angle = normalize_audio_angle(angle)
@@ -504,11 +509,16 @@ class AudioDirectionStabilizer:
 
     def update(self, angle, score=1.0):
         angle = normalize_audio_angle(angle)
+        now = time.perf_counter()
+        if self.samples and self.reset_gap_sec > 0.0:
+            last_time = float(self.samples[-1].get("time", 0.0))
+            if now - last_time > self.reset_gap_sec:
+                self.samples.clear()
         self.samples.append({
             "angle": angle,
             "score": float(score),
             "bin": self._bin(angle),
-            "time": time.perf_counter(),
+            "time": now,
         })
         self.samples = self.samples[-self.window:]
         counts = {}
@@ -780,6 +790,9 @@ def main():
     fire_result_until = 0.0
     fire_hit_pulse_until = 0.0
     fire_fired_pulse_until = 0.0
+    fire_return_center_pending = False
+    fire_return_center_at = 0.0
+    fire_return_center_hold_until = 0.0
     laser_fire_debug = os.getenv("LASER_FIRE_DEBUG", "0").strip().lower() in ("1", "true", "yes", "on")
     laser_runtime_cal_enabled = bool(getattr(config, "LASER_RUNTIME_CALIBRATION", False)) and display is not None
     laser_manual_tick = None
@@ -806,6 +819,7 @@ def main():
         min_votes=config.TELLO_AUDIO_STABLE_MIN_VOTES,
         max_spread_deg=config.TELLO_AUDIO_STABLE_MAX_SPREAD_DEG,
         reject_rear=config.TELLO_AUDIO_REJECT_REAR,
+        reset_gap_sec=config.TELLO_AUDIO_STABLE_RESET_GAP_SEC,
     )
     audio_search_limiter = AudioSearchLimiter(
         bin_deg=config.TELLO_AUDIO_DIRECTION_BIN_DEG,
@@ -1161,7 +1175,11 @@ def main():
                         active_laser_center_lock_tick + laser_spot_correction_tick
                     )
                 held_motor_ok = held and bool(getattr(config, "TRACK_MOTOR_USE_HELD", True))
-                if center_locked:
+                if time.perf_counter() < fire_return_center_hold_until:
+                    last_telemetry = motor_skip_telemetry(
+                        last_telemetry, "fire_center_hold", cx, cy, aim_x, aim_y
+                    )
+                elif center_locked:
                     last_telemetry = motor_skip_telemetry(
                         last_telemetry, "center_lock", cx, cy, aim_x, aim_y
                     )
@@ -1445,6 +1463,7 @@ def main():
                                 0.0,
                                 float(getattr(config, "TELLO_AUDIO_MOTOR_NOISE_BLIND_SEC", 0.8)),
                             )
+                            audio_stabilizer.reset()
                             print(
                                 f"[AUDIO->MOTOR] angle={audio_angle:.1f} "
                                 f"raw_doa={raw_doa_deg:.1f} "
@@ -1550,6 +1569,23 @@ def main():
                         f"hits={fire_hit_frames}/{fire_sample_frames} "
                         f"elapsed={now_fire - fire_assess_start:.3f}s"
                     )
+                    if bool(getattr(config, "FIRE_RETURN_CENTER_ON_HIT", True)):
+                        delay_sec = max(0.0, float(getattr(config, "FIRE_RETURN_CENTER_DELAY_SEC", 1.0)))
+                        hold_sec = max(0.0, float(getattr(config, "FIRE_RETURN_CENTER_HOLD_SEC", 1.0)))
+                        blind_sec = max(0.0, float(getattr(config, "FIRE_RETURN_CENTER_AUDIO_BLIND_SEC", 1.0)))
+                        fire_return_center_pending = True
+                        fire_return_center_at = now_fire + delay_sec
+                        fire_return_center_hold_until = max(fire_return_center_hold_until, fire_return_center_at + hold_sec)
+                        audio_blind_until = max(audio_blind_until, fire_return_center_at + blind_sec)
+                        last_audio_angle = None
+                        last_audio_sent = 0.0
+                        audio_stabilizer.reset()
+                        audio_search_limiter.reset()
+                        print(
+                            f"[FIRE] CENTER scheduled after HIT delay={delay_sec:.2f}s "
+                            f"hold_until={max(0.0, fire_return_center_hold_until - now_fire):.2f}s "
+                            f"audio_blind_until={max(0.0, audio_blind_until - now_fire):.2f}s"
+                        )
                 elif now_fire >= fire_assess_deadline:
                     fire_assess_active = False
                     fire_result = "miss"
@@ -1560,6 +1596,20 @@ def main():
                         f"hits={fire_hit_frames}/{fire_sample_frames} "
                         f"elapsed={now_fire - fire_assess_start:.3f}s"
                     )
+            if fire_return_center_pending and now_fire >= fire_return_center_at:
+                fire_return_center_pending = False
+                try:
+                    last_telemetry = motor.center()
+                    smooth_target_center = None
+                    last_raw_target_center = None
+                    last_motor_target_center = None
+                    lead_velocity = None
+                    pending_jump_center = None
+                    state.transition(SystemState.SCANNING)
+                    fire_telemetry_force = True
+                    print(f"[FIRE] CENTER after HIT reply={last_telemetry.get('fpga_reply', '-')}")
+                except Exception as exc:
+                    print(f"[FIRE] CENTER after HIT failed: {exc}")
             elif fire_result not in ("idle", "") and now_fire >= fire_result_until and now_fire >= fire_hit_pulse_until:
                 fire_result = "idle"
 

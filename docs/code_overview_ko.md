@@ -24,9 +24,8 @@
 
 ## 모델 파일
 
-`models/vision/drone_best_final_0520.engine`은 TensorRT 변환된 YOLO11n 드론 검출 모델입니다.
+`models/vision/drone0525jh.engine`은 현재 최종 데모 기본값으로 사용하는 TensorRT 변환 YOLO11n 드론 검출 모델입니다. `models/vision/drone_best_final_0520.engine`은 이전 안정형 백업 엔진입니다.
 
 `models/audio/tello_detector_cnn_retrained_jetson.tflite`는 드론소리 여부를 판별하는 TFLite 모델입니다.
 
 `models/audio_direction/junyoung_cnn6/audio_angle_cnn_final.tflite`는 ReSpeaker 4채널 입력 기반 6방향 coarse direction classifier입니다.
-
